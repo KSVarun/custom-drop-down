@@ -1,25 +1,95 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+export default function App() {
+  const [openDropDown, setOpenDropDown] = useState(false);
+  const [options, setOptions] = useState([{ value: 'Default', id: 0 }]);
+  const [inputValue, setInputValue] = useState('');
+  const [selectedOption, setSelectedOption] = useState({});
+
+  const renderOptions = () => {
+    return (
+      <div>
+        {openDropDown
+          ? options.map((option) => (
+              <div className="option-delete-tab" key={option.id}>
+                <div
+                  className="options"
+                  onClick={() => handleOptionSelection(option)}
+                >
+                  {option.value}
+                </div>
+                {option.value !== 'Default' ? (
+                  <div
+                    className="delete"
+                    onClick={() => handleDelete(option.id)}
+                  >
+                    D
+                  </div>
+                ) : (
+                  ''
+                )}
+              </div>
+            ))
+          : ''}
+      </div>
+    );
+  };
+
+  const handleOptionSelection = (option) => {
+    setInputValue(option.value);
+    const selectedOption = {
+      value: option.value,
+      id: option.id,
+    };
+    setSelectedOption(selectedOption);
+    setOpenDropDown(false);
+  };
+
+  const handleDelete = (optionId) => {
+    const indexOfOptionToDelete = options.findIndex(
+      (option) => option.id === optionId
+    );
+    if (inputValue === options[indexOfOptionToDelete].value) {
+      setInputValue('');
+    }
+    let updatedOptions = [...options];
+    updatedOptions.splice(indexOfOptionToDelete, 1);
+    setOptions(updatedOptions);
+  };
+
+  const handleSave = () => {
+    let updatedOptions = [];
+    const newOption = {
+      id: Math.random(),
+      value: inputValue,
+    };
+    updatedOptions = [...options, newOption];
+    setInputValue('');
+    setOptions(updatedOptions);
+    if (!openDropDown) {
+      setOpenDropDown(true);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="container">
+      <div className="top-container">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <div
+          onClick={() => setOpenDropDown(!openDropDown)}
+          className={openDropDown ? 'open-drop-down' : 'close-drop-down'}
         >
-          Learn React
-        </a>
-      </header>
+          ^
+        </div>
+        <div className="save" onClick={() => handleSave()}>
+          Save
+        </div>
+      </div>
+      <div className="option-delete-container">{renderOptions()}</div>
     </div>
   );
 }
-
-export default App;
