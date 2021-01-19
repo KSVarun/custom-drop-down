@@ -20,7 +20,7 @@ export default function App() {
                 </div>
                 {option.value !== 'Default' ? (
                   <div
-                    className="delete"
+                    className="delete-icon"
                     onClick={() => handleDelete(option.id)}
                   >
                     D
@@ -58,16 +58,21 @@ export default function App() {
   };
 
   const handleSave = () => {
-    let updatedOptions = [];
-    const newOption = {
-      id: Math.random(),
-      value: inputValue,
-    };
-    updatedOptions = [...options, newOption];
-    setInputValue('');
-    setOptions(updatedOptions);
-    if (!openDropDown) {
-      setOpenDropDown(true);
+    if (inputValue.length <= 0) {
+      const inputFiled = document.querySelector('#custom-dd');
+      inputFiled.focus();
+    } else {
+      let updatedOptions = [];
+      const newOption = {
+        id: Math.random(),
+        value: inputValue,
+      };
+      updatedOptions = [...options, newOption];
+      setInputValue('');
+      setOptions(updatedOptions);
+      if (!openDropDown) {
+        setOpenDropDown(true);
+      }
     }
   };
 
@@ -75,6 +80,7 @@ export default function App() {
     <div className="container">
       <div className="top-container">
         <input
+          id="custom-dd"
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
