@@ -1,14 +1,14 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -21,19 +21,33 @@ code {
 .container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  padding: 40px;
 }
 
 .top-container {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+  #custom-dd {
+    height: 25px;
+  }
 }
 
-.option-delete-tab {
+.option-delete-container {
   display: flex;
-  border-radius: 5px;
-  width: 19vw;
-  background: #cdcdcd;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 110px;
+  .option-delete-tab {
+    display: flex;
+    border-radius: 5px;
+    width: 16.5vw;
+    background: #cdcdcd;
+    margin: 5px;
+  }
 }
 
 .options {

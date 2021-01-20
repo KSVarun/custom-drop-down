@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 export default function App() {
   const [openDropDown, setOpenDropDown] = useState(false);
-  const [options, setOptions] = useState([{ value: 'Default', id: 0 }]);
-  const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState([{ value: "Default", id: 0 }]);
+  const [inputValue, setInputValue] = useState("");
   const [selectedOption, setSelectedOption] = useState({});
 
   const renderOptions = () => {
     return (
-      <div>
+      <div className="option-delete-container">
         {openDropDown
           ? options.map((option) => (
               <div className="option-delete-tab" key={option.id}>
@@ -18,7 +18,7 @@ export default function App() {
                 >
                   {option.value}
                 </div>
-                {option.value !== 'Default' ? (
+                {option.value !== "Default" ? (
                   <div
                     className="delete-icon"
                     onClick={() => handleDelete(option.id)}
@@ -26,11 +26,11 @@ export default function App() {
                     D
                   </div>
                 ) : (
-                  ''
+                  ""
                 )}
               </div>
             ))
-          : ''}
+          : ""}
       </div>
     );
   };
@@ -50,7 +50,7 @@ export default function App() {
       (option) => option.id === optionId
     );
     if (inputValue === options[indexOfOptionToDelete].value) {
-      setInputValue('');
+      setInputValue("");
     }
     let updatedOptions = [...options];
     updatedOptions.splice(indexOfOptionToDelete, 1);
@@ -59,7 +59,7 @@ export default function App() {
 
   const handleSave = () => {
     if (inputValue.length <= 0) {
-      const inputFiled = document.querySelector('#custom-dd');
+      const inputFiled = document.querySelector("#custom-dd");
       inputFiled.focus();
     } else {
       let updatedOptions = [];
@@ -68,7 +68,7 @@ export default function App() {
         value: inputValue,
       };
       updatedOptions = [...options, newOption];
-      setInputValue('');
+      setInputValue("");
       setOptions(updatedOptions);
       if (!openDropDown) {
         setOpenDropDown(true);
@@ -87,7 +87,7 @@ export default function App() {
         />
         <div
           onClick={() => setOpenDropDown(!openDropDown)}
-          className={openDropDown ? 'open-drop-down' : 'close-drop-down'}
+          className={openDropDown ? "open-drop-down" : "close-drop-down"}
         >
           ^
         </div>
@@ -95,7 +95,7 @@ export default function App() {
           Save
         </div>
       </div>
-      <div className="option-delete-container">{renderOptions()}</div>
+      {renderOptions()}
     </div>
   );
 }
