@@ -5,6 +5,7 @@ export default function App() {
   const [options, setOptions] = useState([{ value: "Default", id: 0 }]);
   const [inputValue, setInputValue] = useState("");
   const [selectedOption, setSelectedOption] = useState({});
+  const [inputDisabled, setInputDisabled] = useState(false);
 
   const renderOptions = () => {
     return (
@@ -43,6 +44,7 @@ export default function App() {
     };
     setSelectedOption(selectedOption);
     setOpenDropDown(false);
+    setInputDisabled(true);
   };
 
   const handleDelete = (optionId) => {
@@ -55,6 +57,10 @@ export default function App() {
     let updatedOptions = [...options];
     updatedOptions.splice(indexOfOptionToDelete, 1);
     setOptions(updatedOptions);
+    if (selectedOption.id === optionId) {
+      setSelectedOption({});
+      setInputDisabled(false);
+    }
   };
 
   const handleSave = () => {
@@ -63,16 +69,34 @@ export default function App() {
       inputFiled.focus();
     } else {
       let updatedOptions = [];
-      const newOption = {
-        id: Math.random(),
-        value: inputValue,
-      };
-      updatedOptions = [...options, newOption];
-      setInputValue("");
-      setOptions(updatedOptions);
-      if (!openDropDown) {
-        setOpenDropDown(true);
+      if (Object.keys(selectedOption).length <= 0) {
+        const newOption = {
+          id: Math.random(),
+          value: inputValue,
+        };
+        handleOptionSelection(newOption);
+        updatedOptions = [...options, newOption];
+      } else if (selectedOption.id === options[0].id) {
+        const newOption = {
+          id: Math.random(),
+          value: inputValue,
+        };
+        handleOptionSelection(newOption);
+        updatedOptions = [...options, newOption];
+      } else {
+        const updateSelectedOption = {
+          id: selectedOption.id,
+          value: inputValue,
+        };
+        const optionIndex = options.findIndex(
+          (option) => option.id === updateSelectedOption.id
+        );
+        updatedOptions = [...options];
+        updatedOptions[optionIndex] = updateSelectedOption;
+        handleOptionSelection(updateSelectedOption);
       }
+      setOptions(updatedOptions);
+      setOpenDropDown(true);
     }
   };
 
@@ -84,7 +108,14 @@ export default function App() {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          disabled={inputDisabled}
         />
+        <div
+          className={inputDisabled ? "edit-option-editable" : "edit-option"}
+          onClick={() => setInputDisabled(false)}
+        >
+          E
+        </div>
         <div
           onClick={() => setOpenDropDown(!openDropDown)}
           className={openDropDown ? "open-drop-down" : "close-drop-down"}

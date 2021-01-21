@@ -36,6 +36,22 @@ code {
   }
 }
 
+.edit-option,
+.edit-option-editable {
+  position: relative;
+  left: -20px;
+  opacity: 0;
+}
+
+input:disabled:hover + .edit-option-editable {
+  opacity: 1;
+}
+
+.edit-option-editable:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
 .option-delete-container {
   display: flex;
   flex-direction: column;
@@ -47,6 +63,7 @@ code {
     width: 16.5vw;
     background: #cdcdcd;
     margin: 5px;
+    cursor: pointer;
   }
 }
 
@@ -65,11 +82,13 @@ code {
 
 .open-drop-down {
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .close-drop-down {
   margin-left: 10px;
   transform: rotate(180deg);
+  cursor: pointer;
 }
 
 .option-delete-tab:hover {
