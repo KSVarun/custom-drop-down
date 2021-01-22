@@ -13,7 +13,26 @@ export default function App() {
     if (focusedInputField) {
       setFocusToInputField();
     }
+    if (openDropDown) {
+      document.addEventListener("keydown", _handleEscapeKeyDown, false);
+      document.addEventListener("click", handleClickEventHandler, false);
+      return () => {
+        document.removeEventListener("click", handleClickEventHandler, false);
+        document.removeEventListener("keydown", _handleEscapeKeyDown, false);
+      };
+    }
   });
+
+  const handleClickEventHandler = (target) => {
+    if (openDropDown) {
+      setOpenDropDown(false);
+    }
+  };
+  const _handleEscapeKeyDown = (target) => {
+    if (target.code === "Escape" && openDropDown) {
+      setOpenDropDown(false);
+    }
+  };
 
   const renderOptions = () => {
     return (
