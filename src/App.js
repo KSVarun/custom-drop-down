@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function App() {
   const [openDropDown, setOpenDropDown] = useState(false);
@@ -6,6 +6,14 @@ export default function App() {
   const [inputValue, setInputValue] = useState("");
   const [selectedOption, setSelectedOption] = useState({});
   const [inputDisabled, setInputDisabled] = useState(false);
+  const [buttonTitle, setButtonTitle] = useState("Save");
+  const [focusedInputField, setFocusedToInputField] = useState(false);
+
+  useEffect(() => {
+    if (focusedInputField) {
+      setFocusToInputField();
+    }
+  });
 
   const renderOptions = () => {
     return (
@@ -19,7 +27,7 @@ export default function App() {
                 >
                   {option.value}
                 </div>
-                {option.value !== "Default" ? (
+                {option.id !== 0 ? (
                   <div
                     className="delete-icon"
                     onClick={() => handleDelete(option.id)}
@@ -63,10 +71,14 @@ export default function App() {
     }
   };
 
+  function setFocusToInputField() {
+    const inputFiled = document.querySelector("#custom-dd");
+    inputFiled.focus();
+  }
+
   const handleSave = () => {
     if (inputValue.length <= 0) {
-      const inputFiled = document.querySelector("#custom-dd");
-      inputFiled.focus();
+      setFocusToInputField();
     } else {
       let updatedOptions = [];
       if (Object.keys(selectedOption).length <= 0) {
@@ -98,7 +110,22 @@ export default function App() {
       setOptions(updatedOptions);
       setOpenDropDown(true);
     }
+    setButtonTitle("Save");
   };
+
+  const handleOptionEdit = () => {
+    setInputDisabled(false);
+    if (selectedOption.id !== options[0].id) {
+      setButtonTitle("Update");
+    }
+    setFocusedToInputField(true);
+  };
+
+  function handleEnterKeyPress(target) {
+    if (target.charCode === 13) {
+      handleSave();
+    }
+  }
 
   return (
     <div className="container">
@@ -109,10 +136,13 @@ export default function App() {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           disabled={inputDisabled}
+          onKeyPress={(e) => handleEnterKeyPress(e)}
         />
         <div
-          className={inputDisabled ? "edit-option-editable" : "edit-option"}
-          onClick={() => setInputDisabled(false)}
+          className={
+            inputDisabled ? "edit-option-editable" : "edit-option-uneditable"
+          }
+          onClick={() => handleOptionEdit()}
         >
           E
         </div>
@@ -123,7 +153,7 @@ export default function App() {
           ^
         </div>
         <div className="save" onClick={() => handleSave()}>
-          Save
+          {buttonTitle}
         </div>
       </div>
       {renderOptions()}
