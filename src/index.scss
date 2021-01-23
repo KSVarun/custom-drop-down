@@ -12,90 +12,255 @@ code {
     monospace;
 }
 
-.delete-icon {
-  margin-right: 3px;
-  cursor: pointer;
-  opacity: 0;
-}
-
 .container {
+  transition: 0.5s;
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100vw;
   padding: 40px;
-}
+  .top-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    #custom-dd {
+      height: 25px;
+      width: 200px;
+      font-family: revert;
+      font-size: smaller;
+      color: #748595 !important;
+      margin: 5px;
+    }
+    #custom-dd:disabled:hover + .edit-option-editable {
+      opacity: 1;
+    }
+    .edit-option-uneditable,
+    .edit-option-editable {
+      position: relative;
+      left: -20px;
+      opacity: 0;
+    }
+    .edit-option-editable:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+    .open-drop-down {
+      margin-left: 10px;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+    .close-drop-down {
+      margin-left: 10px;
+      transform: rotate(180deg);
+      cursor: pointer;
+      transition: 0.5s;
+    }
+    .save {
+      margin-left: 40px;
+      background: #eae7e7;
+      padding: 4px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: revert;
+      font-size: smaller;
+      color: #748595;
+    }
 
-.top-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  #custom-dd {
-    height: 25px;
-    width: 200px;
+    .toggle-dark-mode-container {
+      width: 40px;
+      height: 15px;
+      border: 1px solid#e9e7e7;
+      margin-left: 30px;
+      border-radius: 10px;
+      transition: 0.5s;
+      cursor: pointer;
+    }
+
+    .toggle-dark-mode {
+      &.light {
+        height: 21px;
+        width: 21px;
+        border-radius: 50%;
+        border: 1px solid #e9e7e7;
+        position: relative;
+        top: -4px;
+        left: -1px;
+        background: #e9e7e7;
+        transition: 0.5s;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .option-delete-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 110px;
+    .option-delete-tab {
+      height: 30px;
+      align-items: center;
+      display: flex;
+      border-radius: 5px;
+      background: #eae7e7;
+      margin: 5px;
+      cursor: pointer;
+      width: 208px;
+      margin-right: 85px;
+      .options {
+        flex: 1;
+        margin-left: 3px;
+        color: #748595;
+        font-family: revert;
+        font-size: smaller;
+      }
+      .delete-icon {
+        margin-right: 3px;
+        cursor: pointer;
+        opacity: 0;
+      }
+    }
+    .option-delete-tab:hover {
+      .delete-icon {
+        opacity: 1;
+      }
+    }
   }
 }
 
-.edit-option-uneditable,
-.edit-option-editable {
-  position: relative;
-  left: -20px;
-  opacity: 0;
-}
+//dark mode
 
-input:disabled:hover + .edit-option-editable {
-  opacity: 1;
-}
-
-.edit-option-editable:hover {
-  opacity: 1;
-  cursor: pointer;
-}
-
-.option-delete-container {
+.container-dark {
+  transition: 0.5s;
+  background: #444;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-right: 110px;
-  .option-delete-tab {
+  height: 100vh;
+  width: 100vw;
+  padding: 40px;
+  .top-container {
     display: flex;
-    border-radius: 5px;
-    width: 16.5vw;
-    background: #cdcdcd;
-    margin: 5px;
-    cursor: pointer;
-    width: 208px;
-    margin-right: 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    #custom-dd-dark {
+      background: #444;
+      border-color: #251c1c;
+      background-color: #444444 !important;
+      color: #9baab9 !important;
+      height: 25px;
+      width: 200px;
+      font-family: revert;
+      font-size: smaller;
+      margin: 5px;
+    }
+    #custom-dd-dark:disabled:hover + .edit-option-editable {
+      opacity: 1;
+    }
+    .edit-option-uneditable,
+    .edit-option-editable {
+      position: relative;
+      left: -20px;
+      opacity: 0;
+    }
+    .edit-option-editable:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+    .open-drop-down {
+      margin-left: 10px;
+      transition: 0.5s;
+      cursor: pointer;
+    }
+    .close-drop-down {
+      margin-left: 10px;
+      transition: 0.5s;
+      transform: rotate(180deg);
+      cursor: pointer;
+    }
+    .save-dark {
+      background: #211f1f;
+      margin-left: 40px;
+      padding: 4px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: revert;
+      font-size: smaller;
+      color: #748595;
+    }
+
+    .toggle-dark-mode-container {
+      width: 40px;
+      height: 15px;
+      border: 1px solid black;
+      margin-left: 30px;
+      border-radius: 10px;
+      transition: 0.5s;
+      cursor: pointer;
+    }
+
+    .toggle-dark-mode {
+      &.dark {
+        left: 18px;
+        height: 21px;
+        width: 21px;
+        border-radius: 50%;
+        border: 1px solid #444;
+        position: relative;
+        top: -4px;
+        background: #211f1f;
+        transition: 0.5s;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .option-delete-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 110px;
+    .option-delete-tab {
+      height: 30px;
+      align-items: center;
+      display: flex;
+      border-radius: 5px;
+      background: #211f1f;
+      margin: 5px;
+      cursor: pointer;
+      width: 208px;
+      margin-right: 85px;
+      .options {
+        flex: 1;
+        margin-left: 3px;
+        color: #748595;
+        font-family: revert;
+        font-size: smaller;
+      }
+      .delete-icon {
+        margin-right: 3px;
+        cursor: pointer;
+        opacity: 0;
+      }
+    }
+    .option-delete-tab:hover {
+      .delete-icon {
+        opacity: 1;
+      }
+    }
   }
 }
 
-.options {
-  flex: 1;
-  margin-left: 3px;
-}
-
-.save {
-  margin-left: 40px;
-  background: #cdcdcd;
-  padding: 4px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.open-drop-down {
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.close-drop-down {
-  margin-left: 10px;
-  transform: rotate(180deg);
-  cursor: pointer;
-}
-
-.option-delete-tab:hover {
-  .delete-icon {
-    opacity: 1;
+.container-dark {
+  background: #444;
+  .custom-dd-dark {
+    background: #444;
+    border-color: #251c1c;
+    background-color: #444 !important;
+    color: #444 !important;
+  }
+  .save-dark {
+    background: #211f1f;
   }
 }

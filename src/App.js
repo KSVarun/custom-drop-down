@@ -8,6 +8,14 @@ export default function App() {
   const [inputDisabled, setInputDisabled] = useState(false);
   const [buttonTitle, setButtonTitle] = useState("Save");
   const [focusedInputField, setFocusedToInputField] = useState(false);
+  const [className, setClassName] = useState({
+    container: "container",
+    inputTag: "custom-dd",
+    saveUpdateButton: "save",
+    toggleButton: "light",
+    optionsTab: "options-delete-tab",
+  });
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     if (focusedInputField) {
@@ -42,14 +50,14 @@ export default function App() {
               <div className="option-delete-tab" key={option.id}>
                 <div
                   className="options"
-                  onClick={() => handleOptionSelection(option)}
+                  onClick={(e) => handleOptionSelection(option, e)}
                 >
                   {option.value}
                 </div>
                 {option.id !== 0 ? (
                   <div
                     className="delete-icon"
-                    onClick={() => handleDelete(option.id)}
+                    onClick={(e) => handleDelete(option.id, e)}
                   >
                     D
                   </div>
@@ -63,7 +71,8 @@ export default function App() {
     );
   };
 
-  const handleOptionSelection = (option) => {
+  const handleOptionSelection = (option, e) => {
+    e.stopPropagation();
     setInputValue(option.value);
     const selectedOption = {
       value: option.value,
@@ -74,7 +83,8 @@ export default function App() {
     setInputDisabled(true);
   };
 
-  const handleDelete = (optionId) => {
+  const handleDelete = (optionId, e) => {
+    e.stopPropagation();
     const indexOfOptionToDelete = options.findIndex(
       (option) => option.id === optionId
     );
@@ -88,14 +98,21 @@ export default function App() {
       setSelectedOption({});
       setInputDisabled(false);
     }
+    setOpenDropDown(true);
   };
 
   function setFocusToInputField() {
-    const inputFiled = document.querySelector("#custom-dd");
-    inputFiled.focus();
+    const inputFieldLight = document.querySelector("#custom-dd");
+    if (inputFieldLight) {
+      inputFieldLight.focus();
+    } else {
+      const inputFieldDark = document.querySelector("#custom-dd-dark");
+      inputFieldDark.focus();
+    }
   }
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.stopPropagation();
     if (inputValue.length <= 0) {
       setFocusToInputField();
     } else {
@@ -105,14 +122,14 @@ export default function App() {
           id: Math.random(),
           value: inputValue,
         };
-        handleOptionSelection(newOption);
+        handleOptionSelection(newOption, e);
         updatedOptions = [...options, newOption];
       } else if (selectedOption.id === options[0].id) {
         const newOption = {
           id: Math.random(),
           value: inputValue,
         };
-        handleOptionSelection(newOption);
+        handleOptionSelection(newOption, e);
         updatedOptions = [...options, newOption];
       } else {
         const updateSelectedOption = {
@@ -124,7 +141,7 @@ export default function App() {
         );
         updatedOptions = [...options];
         updatedOptions[optionIndex] = updateSelectedOption;
-        handleOptionSelection(updateSelectedOption);
+        handleOptionSelection(updateSelectedOption, e);
       }
       setOptions(updatedOptions);
       setOpenDropDown(true);
@@ -132,7 +149,8 @@ export default function App() {
     setButtonTitle("Save");
   };
 
-  const handleOptionEdit = () => {
+  const handleOptionEdit = (e) => {
+    e.stopPropagation();
     setInputDisabled(false);
     if (selectedOption.id !== options[0].id) {
       setButtonTitle("Update");
@@ -142,15 +160,38 @@ export default function App() {
 
   function handleEnterKeyPress(target) {
     if (target.charCode === 13) {
-      handleSave();
+      handleSave(target);
     }
   }
 
+  const handleDarkModeToggle = (e) => {
+    e.stopPropagation();
+    if (!darkMode) {
+      setDarkMode(true);
+      setClassName({
+        container: "container-dark",
+        inputTag: "custom-dd-dark",
+        saveUpdateButton: "save-dark",
+        toggleButton: "dark",
+        optionsTab: "options-delete-tab-dark",
+      });
+    } else {
+      setDarkMode(false);
+      setClassName({
+        container: "container",
+        inputTag: "custom-dd",
+        saveUpdateButton: "save",
+        toggleButton: "light",
+        optionsTab: "options-delete-tab",
+      });
+    }
+  };
+
   return (
-    <div className="container">
+    <div className={`${className.container}`}>
       <div className="top-container">
         <input
-          id="custom-dd"
+          id={`${className.inputTag}`}
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
@@ -161,18 +202,30 @@ export default function App() {
           className={
             inputDisabled ? "edit-option-editable" : "edit-option-uneditable"
           }
-          onClick={() => handleOptionEdit()}
+          onClick={(e) => handleOptionEdit(e)}
         >
           E
         </div>
         <div
-          onClick={() => setOpenDropDown(!openDropDown)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpenDropDown(!openDropDown);
+          }}
           className={openDropDown ? "open-drop-down" : "close-drop-down"}
         >
           ^
         </div>
-        <div className="save" onClick={() => handleSave()}>
+        <div
+          className={`${className.saveUpdateButton}`}
+          onClick={(e) => handleSave(e)}
+        >
           {buttonTitle}
+        </div>
+        <div
+          className="toggle-dark-mode-container"
+          onClick={(e) => handleDarkModeToggle(e)}
+        >
+          <div className={`toggle-dark-mode ${className.toggleButton}`}></div>
         </div>
       </div>
       {renderOptions()}
