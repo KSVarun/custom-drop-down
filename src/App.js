@@ -197,6 +197,7 @@ export default function App() {
           onChange={(e) => setInputValue(e.target.value)}
           disabled={inputDisabled}
           onKeyPress={(e) => handleEnterKeyPress(e)}
+          autocomplete="off"
         />
         <div
           className={

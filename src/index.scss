@@ -38,7 +38,7 @@ code {
     .edit-option-uneditable,
     .edit-option-editable {
       position: relative;
-      left: -20px;
+      left: 10px;
       opacity: 0;
     }
     .edit-option-editable:hover {
@@ -49,12 +49,16 @@ code {
       margin-left: 10px;
       cursor: pointer;
       transition: 0.5s;
+      position: relative;
+      left: -50px;
     }
     .close-drop-down {
       margin-left: 10px;
       transform: rotate(180deg);
       cursor: pointer;
       transition: 0.5s;
+      position: relative;
+      left: -50px;
     }
     .save {
       margin-left: 40px;
@@ -161,7 +165,7 @@ code {
     .edit-option-uneditable,
     .edit-option-editable {
       position: relative;
-      left: -20px;
+      left: 10px;
       opacity: 0;
     }
     .edit-option-editable:hover {
@@ -172,12 +176,16 @@ code {
       margin-left: 10px;
       transition: 0.5s;
       cursor: pointer;
+      position: relative;
+      left: -50px;
     }
     .close-drop-down {
       margin-left: 10px;
       transition: 0.5s;
       transform: rotate(180deg);
       cursor: pointer;
+      position: relative;
+      left: -50px;
     }
     .save-dark {
       background: #211f1f;
